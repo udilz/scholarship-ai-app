@@ -155,9 +155,9 @@ const ScholarshipController = {
             },
          ];
          // console.log(hasilAI);
-         console.log(mResponse);
+         // console.log(mResponse);
          
-         return res.status(200).json({mResponse});
+         return res.status(200).json(hasilAI);
       } catch (error) {
          console.error(error);
          return res.status(500).json({ error: "An error occurred while processing your request." });

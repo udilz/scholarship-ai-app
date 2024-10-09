@@ -20,9 +20,9 @@ export async function searchScholarship({country, major, degrees, funding_type, 
         }
 
         const response = await res.json();
-        console.log(response);
+        console.log(response?.[0]?.rekomendasi);
         
-        return response.cholarships;
+        return response;
     } catch (error) {
         console.error('Error Fetch scholarship:', error); 
         throw error;  
