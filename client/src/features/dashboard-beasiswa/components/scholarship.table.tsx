@@ -1,20 +1,12 @@
-interface Scholarship {
-  no: number;
-  name: string;
-  link: string;
-  country: string;
-  fundingType: string;
-  major: string;
-  openDate: string;
-  closeDate: string;
-  description: string;
-}
+import { IDataScholarship } from '../types/scholarship.type';
+import { Link } from 'react-router-dom';
 
 interface ScholarshipTableProps {
-  scholarships: Scholarship[];
+  scholarships: IDataScholarship[];
+  onDelete: (id: string) => void;
 }
 
-export const ScholarshipTable = ({ scholarships }: ScholarshipTableProps) => {
+export const ScholarshipTable = ({ scholarships, onDelete }: ScholarshipTableProps) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="text-left text-sm text-gray-500">
@@ -27,13 +19,22 @@ export const ScholarshipTable = ({ scholarships }: ScholarshipTableProps) => {
               Nama Beasiswa
             </th>
             <th scope="col" className="px-6 py-3">
+              Universitas
+            </th>
+            <th scope="col" className="px-6 py-3">
               Link Beasiswa
             </th>
             <th scope="col" className="px-6 py-3">
               Negara
             </th>
             <th scope="col" className="px-6 py-3">
+              City
+            </th>
+            <th scope="col" className="px-6 py-3">
               Tipe Pendanaan Beasiswa
+            </th>
+            <th scope="col" className="px-6 py-3">
+              jenjang beasiswa
             </th>
             <th scope="col" className="px-6 py-3">
               Jurusan
@@ -54,29 +55,30 @@ export const ScholarshipTable = ({ scholarships }: ScholarshipTableProps) => {
         </thead>
         <tbody>
           {scholarships.map((scholarship, index) => (
-            <tr key={index} className="border-b bg-white">
-              <td className="px-6 py-4">{scholarship.no}</td>
-              <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                {scholarship.name}
-              </th>
+            <tr key={scholarship._id} className="border-b bg-white">
+              <td className="px-6 py-4">{index + 1}</td>
+              <td className="max-w-xs overflow-hidden text-ellipsis whitespace-nowrap px-6 py-4">{scholarship.name.length > 20 ? `${scholarship.name.substring(0, 25)}...` : scholarship.name}</td>
+              <td className="px-6 py-4">{scholarship.university}</td>
               <td className="px-6 py-4">
-                <a href={scholarship.link} className="text-blue-600">
-                  HTTP
+                <a href={scholarship.url_web} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                  {scholarship.url_web}
                 </a>
               </td>
               <td className="px-6 py-4">{scholarship.country}</td>
-              <td className="px-6 py-4">{scholarship.fundingType}</td>
+              <td className="px-6 py-4">{scholarship.city}</td>
+              <td className="px-6 py-4">{scholarship.funding_type}</td>
+              <td className="px-6 py-4">{scholarship.degrees}</td>
               <td className="px-6 py-4">{scholarship.major}</td>
-              <td className="px-6 py-4">{scholarship.openDate}</td>
-              <td className="px-6 py-4">{scholarship.closeDate}</td>
-              <td className="px-6 py-4">{scholarship.description}</td>
+              <td className="px-6 py-4">{new Date(scholarship.open_date).toLocaleDateString('id-ID')}</td>
+              <td className="px-6 py-4">{new Date(scholarship.close_date).toLocaleDateString('id-ID')}</td>
+              <td className="block w-96 px-6 py-4">{scholarship.description}</td>
               <td className="space-x-4 px-6 py-4">
-                <a href="#" className="text-red-500">
+                <a href="#" className="text-red-500" onClick={() => onDelete(scholarship._id)}>
                   delete
                 </a>
-                <a href="#" className="text-blue-600">
-                  edit
-                </a>
+                <Link to={`/dashboard/scholarship/edit/${scholarship._id}`} className="text-blue-600">
+                  update
+                </Link>
               </td>
             </tr>
           ))}

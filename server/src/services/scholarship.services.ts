@@ -39,6 +39,16 @@ const ScholarshipServices = {
       }
    },
 
+   getScholarshipById: async (scholarshipId: string) => {
+      try {
+         const scholarship = await ScholarshipRepository.findById(scholarshipId);
+         return scholarship;
+      } catch (error) {
+         console.log("Error getting scholarship in service", error);
+         throw new Error("Error getting scholarship");
+      }
+   },
+
    deleteScholarship: async (scholarshipId: string) => {
       try {
          const scholarship = await ScholarshipRepository.findById(scholarshipId);
@@ -51,6 +61,7 @@ const ScholarshipServices = {
          throw new Error("Error deleting scholarship");
       }
    },
+
    getUserProfile: async (email: string) => {
       try {
          const user = await UsersRepository.findOne(email);
@@ -63,6 +74,7 @@ const ScholarshipServices = {
          throw new Error("Error fetching user");
       }
    },
+
    getScholarshipByData : async (country: string, major: string, degrees: string, funding_type: string) => {
       try {
          const scholarship = await ScholarshipRepository.searchScholarship(country, major, degrees, funding_type)
@@ -72,6 +84,7 @@ const ScholarshipServices = {
          throw new Error("Error fetching scholarship");
       }
    },
+
 };
 
 export default ScholarshipServices;

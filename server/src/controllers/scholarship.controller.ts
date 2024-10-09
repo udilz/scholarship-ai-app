@@ -52,15 +52,15 @@ const ScholarshipController = {
    },
 
    handleUpdateScholarship: async (req: Request, res: Response) => {
-      const header = req.headers.authorization;
+      // const header = req.headers.authorization;
       const scholarshipId = req.params.id;
 
       // updating a scholarship requires authorization
-      if (header !== "123123") {
-         return res.status(401).json({
-            message: "Unauthorized",
-         });
-      }
+      // if (header !== "123123") {
+      //    return res.status(401).json({
+      //       message: "Unauthorized",
+      //    });
+      // }
 
       try {
          // business logic to update a scholarship
@@ -85,6 +85,23 @@ const ScholarshipController = {
             error: "Server error",
             details: error instanceof Error ? error.message : "An unknown error occurred",
          });
+      }
+   },
+
+   handleGetById: async (req: Request, res: Response) => {
+      const scholarshipId = req.params.id;
+      try {
+         // Call the service to get the scholarship by id
+         const foundScholarship = await ScholarshipServices.getScholarshipById(scholarshipId);
+         if (!foundScholarship) {
+            return res.status(404).json({ error: "Scholarship not found" });
+         }
+
+         // return response
+         return res.json({ data: foundScholarship });
+      } catch (error) {
+         const typedError = error as Error;
+         return res.status(500).json({ message: typedError.message || "Server error", error: "failed to get data" });
       }
    },
 

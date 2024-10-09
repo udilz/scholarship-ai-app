@@ -9,6 +9,7 @@ import { DashboardBeasiswa } from '@/features/dashboard-beasiswa/components';
 import { FormAddBeasiswa } from '@/features/dashboard-beasiswa/components/form.add-beasiswa';
 import { Layout } from '@/features/components/layout';
 import { Propmtpage } from '@/features/prompt-page/components';
+import { FormEditBeasiswa } from '@/features/dashboard-beasiswa/components/form.edit-beasiswa';
 
 export const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ export const AppRouter = () => {
         </Route>
         <Route element={<LayoutDashboard isCentered />}>
           <Route path="/dashboard/scholarship/create" element={<FormAddBeasiswa />}></Route>
+          <Route path="/dashboard/scholarship/edit/:id" element={<FormEditBeasiswa />}></Route>
         </Route>
         <Route element={<Layout/>}>
           <Route path="/prompt" element={<Propmtpage/>}></Route>

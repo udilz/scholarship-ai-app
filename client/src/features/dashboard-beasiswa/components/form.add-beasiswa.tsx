@@ -8,7 +8,6 @@ import { addBeasiswa } from '../services/dashboard.api';
 import { useState } from 'react';
 import React from 'react';
 
-
 export const FormAddBeasiswa = () => {
   const [error, setError] = useState<string>('');
   const [isLoading, setLoading] = useState(false);
@@ -16,6 +15,7 @@ export const FormAddBeasiswa = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
+    university:'',
     country: '',
     city: '',
     email: '',
@@ -29,6 +29,15 @@ export const FormAddBeasiswa = () => {
 
   async function handleAddScholarship(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!formData.country || !formData.funding_type || !formData.degrees || !formData.major) {
+      return setError('Please select all required fields.');
+    }
+
+    if (!formData.open_date || !formData.close_date) {
+      return setError('Please provide both open and close dates.');
+    }
+
     setLoading(true);
 
     console.log(formData)
@@ -40,6 +49,7 @@ export const FormAddBeasiswa = () => {
     }
 
     setSuccess(true);
+    setError('');
     setLoading(false);
   }
 
@@ -54,16 +64,18 @@ export const FormAddBeasiswa = () => {
           <h3>Tambah Beasiswa</h3>
           <section>
             <form onSubmit={handleAddScholarship} action="" className="space-y-3">
-              <Input placeholder="Nama Beasiswa" onChange={handleChange} name="name" className="placeholder:text-black" />
-              <Input placeholder="Link beasiswa" onChange={handleChange} name="url_web" className="placeholder:text-black" />
-              <Input placeholder="City" onChange={handleChange} name="city" className="placeholder:text-black" />
-              <Input placeholder="email" onChange={handleChange} name="email" className="placeholder:text-black"/>
+              <Input placeholder="Nama Beasiswa" onChange={handleChange} name="name" className="placeholder:text-black" value={formData.name} required />
+              <Input placeholder="Link beasiswa" value={formData.url_web} onChange={handleChange} name="url_web" className="placeholder:text-black" required />
+              <Input placeholder="university" value={formData.university} onChange={handleChange} name="university" className="placeholder:text-black" required />
+              <Input placeholder="City" value={formData.city} onChange={handleChange} name="city" className="placeholder:text-black" required />
+              <Input placeholder="email" value={formData.email} onChange={handleChange} name="email" className="placeholder:text-black" required/>
               <Select 
                 caption="Negara" 
                 options={countries} 
                 name="country" 
                 onValueChange={(value) => setFormData((prev) => ({ ...prev, country: value }))} 
                 value={formData.country} 
+                required
               />
               <Select 
                 caption="Jenis Pendanaan" 
@@ -71,6 +83,7 @@ export const FormAddBeasiswa = () => {
                 name="funding_type" 
                 onValueChange={(value) => setFormData((prev) => ({ ...prev, funding_type: value }))} 
                 value={formData.funding_type} 
+                required
               />
               <Select 
                 caption="Jenjang Beasiswa" 
@@ -79,6 +92,7 @@ export const FormAddBeasiswa = () => {
                 name="degrees" 
                 onValueChange={(value) => setFormData((prev) => ({ ...prev, degrees: value }))} 
                 value={formData.degrees} 
+                required
               />
               <Select 
                 caption="Jurusan" 
@@ -87,15 +101,16 @@ export const FormAddBeasiswa = () => {
                 name="major" 
                 onValueChange={(value) => setFormData((prev) => ({ ...prev, major: value }))} 
                 value={formData.major} 
+                required
               />
-              <InputDate label="Open Date" onChange={handleChange} name="open_date" />
-              <InputDate label="Close Date" onChange={handleChange} name="close_date" />
-              <Textarea placeholder="Diskripsi beasiswa"onChange={handleChange} name="description" className="placeholder:text-black" rows={6} />
+              <InputDate label="Open Date" value={formData.open_date} onChange={handleChange} name="open_date" />
+              <InputDate label="Close Date" value={formData.close_date} onChange={handleChange} name="close_date" />
+              <Textarea placeholder="Diskripsi beasiswa" required value={formData.description} onChange={handleChange} name="description" className="placeholder:text-black" rows={6} />
               <Button disabled={isLoading} isFullwidth>
                 Add
               </Button>
-              {error && <div>{error}</div>}
-              {isSuccess && <div className="text-center text-xs text-emerald-500">data berhasil ditambah kan.</div>}
+              {error && <div className='text-center text-base text-red-500'>{error}</div>}
+              {isSuccess && <div className="text-center text-base text-emerald-500">data berhasil ditambah kan.</div>}
             </form>
           </section>
         </section>
