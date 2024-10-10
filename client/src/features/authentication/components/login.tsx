@@ -25,13 +25,6 @@ export const Login = () => {
     },
   });
 
-  async function handleContinueWithGoogle(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    await fetch('http://localhost:8000/api/v1/users/continue-with-google', {
-      method: 'POST',
-    });
-  }
-
   return (
     <main className="h-full w-full font-poppins">
       <Helmet>
