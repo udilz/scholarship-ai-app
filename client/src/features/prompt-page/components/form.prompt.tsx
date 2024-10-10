@@ -11,7 +11,6 @@ export const PropmtForm = () => {
   // const getUser = JSON.parse(localStorage.getItem('user') as string);
   const {data, handleSearchScholarship, isPending, isError, formData, setFormData} = useSearch();
 
-  
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="flex h-3/4 w-3/4 rounded-md border shadow-md">
@@ -29,11 +28,18 @@ export const PropmtForm = () => {
           </div>
           {isError && <div className="text-red-500">An error occurred while fetching data.</div>}
         </section>
-        <section className="flex-1 space-y-3 overflow-hidden overflow-y-auto p-5">
+        <section className="flex-1  overflow-hidden overflow-y-auto p-5">        
           {isPending ? 'Searching...' : ''}
-          {data?.map((data: IDataScholarship) => {
-            return <Card key={data._id} title={data.name} description={data.description} link={data.url_web} openDate={new Date(data.open_date).toLocaleDateString('id-ID')} closeDate={new Date(data.close_date).toLocaleDateString('id-ID')} city={data.city} country={data.country}></Card>;
-          })}
+          {data && (
+            <div className='space-y-5'>
+              <p><strong>Short Description:</strong> {data.parsedRekomendasi?.shortDescription}</p>
+              <div className='space-y-3'>
+              {data.listBeasiswa?.map((data: IDataScholarship) => {
+                return <Card key={data._id} title={data.name} description={data.description} link={data.url_web} openDate={new Date(data.open_date).toLocaleDateString('id-ID')} closeDate={new Date(data.close_date).toLocaleDateString('id-ID')} city={data.city} country={data.country}></Card>;
+              })}
+              </div>
+            </div>
+          )}
         </section>
       </div>
     </div>
