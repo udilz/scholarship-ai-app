@@ -48,6 +48,7 @@ const UsersRepository = {
              { _id: userID },
              { $set: updatedData },
              { new: true, omitUndefined: true },
+             
           );
           return updatedScholarship;
        } catch (error) {

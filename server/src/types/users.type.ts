@@ -9,4 +9,5 @@ export interface IUser {
     preference: string;
     created_at?: Date;
     updated_at?: Date;
+    onboardingCompleted: boolean;
 }

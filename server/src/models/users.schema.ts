@@ -11,7 +11,8 @@ const UserSchema = new Schema({
     funding_need: String,
     preference: String,
     created_at: Date,
-    updated_at: Date
+    updated_at: Date,
+    onboardingCompleted: { type: Boolean, default: false }, // New field
  });
  
  // create collection

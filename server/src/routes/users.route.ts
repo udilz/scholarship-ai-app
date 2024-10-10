@@ -67,6 +67,7 @@ userRouter.get("/login/google/callback", async (req, res) => {
          major: user.major,
          funding_need: user.funding_need,
          preference: user.preference,
+         onboardingCompleted: true, 
       });
 
       // generate Session ID
@@ -74,6 +75,7 @@ userRouter.get("/login/google/callback", async (req, res) => {
          id: newUser._id,
          name: newUser.name,
          email: newUser.email,
+         role: newUser.role, // Include role in payload
       };
       // Authorization
       const accessToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "10m" });
@@ -90,13 +92,15 @@ userRouter.get("/login/google/callback", async (req, res) => {
          .cookie("accessToken", accessToken)
          .cookie("user", JSON.stringify(payload))
          .status(200)
-         .redirect("http://localhost:5173/onboarding");
+         .redirect(newUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/onboarding");
    }
+
    // generate Session ID
    const payload = {
       id: findUser._id,
       name: findUser.name,
       email: findUser.email,
+      role: findUser.role, // Include role in payload
    };
    // Authorization
    const accessToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "10m" });
@@ -107,10 +111,21 @@ userRouter.get("/login/google/callback", async (req, res) => {
       RefreshToken: refreshToken,
    });
    await newRefreshToken.save();
-   return res
-      .cookie("refreshToken", refreshToken, { httpOnly: true })
-      .cookie("accessToken", accessToken)
-      .cookie("user", JSON.stringify(payload))
-      .status(200)
-      .redirect("http://localhost:5173/onboarding");
+   // Redirect based on onboarding completion
+   if (findUser.onboardingCompleted) {
+      return res
+         .cookie("refreshToken", refreshToken, { httpOnly: true })
+         .cookie("accessToken", accessToken)
+         .cookie("user", JSON.stringify(payload))
+         .status(200)
+         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/prompt"); // Redirect to prompt page
+   } else {
+      return res
+         .cookie("refreshToken", refreshToken, { httpOnly: true })
+         .cookie("accessToken", accessToken)
+         .cookie("user", JSON.stringify(payload))
+         .status(200)
+         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/onboarding");
+   }
 });
+
