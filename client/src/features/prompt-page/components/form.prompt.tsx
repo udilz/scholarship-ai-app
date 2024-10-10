@@ -28,11 +28,19 @@ export const PropmtForm = () => {
           </div>
           {isError && <div className="text-red-500">An error occurred while fetching data.</div>}
         </section>
-        <section className="flex-1  overflow-hidden overflow-y-auto p-5">        
-          {isPending ? 'Searching...' : ''}
+        <section className="flex-1  overflow-hidden overflow-y-auto ">
+        {isPending ? <p className='p-5'>Searching...</p> : ''}
           {data && (
-            <div className='space-y-5'>
-              <p><strong>Short Description:</strong> {data.parsedRekomendasi?.shortDescription}</p>
+            <section className='flex gap-3 border p-5 sticky top-0 bg-white'>
+            <div className='text-sm border p-2 rounded-full w-10 h-10 flex justify-center'>{data.rekomendasi.RELEVANCY}%</div>
+            <div className='text-wrap'>
+              <p className='font-bold'>short description</p>
+              <p>{data.rekomendasi?.shortDescription}</p>
+            </div>
+          </section>
+          )}        
+          {data && (          
+            <div className='space-y-5 p-5'>
               <div className='space-y-3'>
               {data.listBeasiswa?.map((data: IDataScholarship) => {
                 return <Card key={data._id} title={data.name} description={data.description} link={data.url_web} openDate={new Date(data.open_date).toLocaleDateString('id-ID')} closeDate={new Date(data.close_date).toLocaleDateString('id-ID')} city={data.city} country={data.country}></Card>;
