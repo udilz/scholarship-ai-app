@@ -291,61 +291,65 @@ const ScholarshipController = {
 
    handleGetData: async (req: Request, res: Response) => {
       try {
-         const { country, major, degrees, funding_type, email } = req.body;
-         console.log(country, major, degrees, funding_type, email);
-         const allScholarships = await ScholarshipServices.getScholarshipByData(country, major, degrees, funding_type);
-         // console.log(allScholarships)
-         const userProfile = await ScholarshipServices.getUserProfile(email);
-         const openai = new OpenAI({
-            apiKey: config.OPENAI_API_KEY,
-         });
-         const mResponse = { userProfile: userProfile, scholarships: allScholarships };
-
-         // Define the messages correctly without the unnecessary MessageContent structure.
-         const messages: ChatCompletionMessageParam[] = [
-            {
-               role: "system",
-               content:
-                  "You are an expert education consultant and good at viewing student profiles to get scholarships:\n\nIMPORTANT\nthe output should be only valid JSON with the following keys:\n- relevancy: percentage\n- shortDescription: string\n- pros and cons analysis\n\nIMPORTANT\nINPUT SCHOLARSHIP LIST IN JSON FORMAT",
-            },
-         ];
-
-         // Using just a single string for user messages
-         mResponse.scholarships.forEach((scholarship) => {
-            messages.push({
-               role: "user",
-               content: `{"type": "text", "text": "Analyze the suitability of your profile to this scholarship program PROFILE: ${JSON.stringify(
-                  mResponse.userProfile,
-               )} SCHOLARSHIP: ${JSON.stringify(scholarship)}"}`,
-            });
-         });
-
-         // Call the OpenAI API with the prepared messages
-         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: messages,
-            temperature: 1,
-            max_tokens: 2048,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0,
-         });
-
-         const hasilAI = [
-            {
-               rekomendasi: response.choices[0].message.content,
-               listBeasiswa: mResponse.scholarships,
-            },
-         ];
-         // console.log(hasilAI);
-         // console.log(mResponse);
-
-         return res.status(200).json(hasilAI);
+          const { country, major, degrees, funding_type, email } = req.body;
+          const allScholarships = await ScholarshipServices.getScholarshipByData(country, major, degrees, funding_type);
+          const userProfile = await ScholarshipServices.getUserProfile(email);
+          const openai = new OpenAI({
+              apiKey: config.OPENAI_API_KEY,
+          });
+          const mResponse = { userProfile: userProfile, scholarships: allScholarships };
+  
+          // Define the messages correctly without the unnecessary MessageContent structure.
+          const messages: ChatCompletionMessageParam[] = [{
+              role: "system",
+              content: "You are an expert education consultant and good at viewing student profiles to get scholarships:\n\nIMPORTANT\nTHE OUTPUT SHOULD BE ONLY VALID JSON WITH THE FOLLOWING KEYS:\n- RELEVANCY: percentage\n- shortDescription: string\n- pros and cons analysis\n\nIMPORTANT\nINPUT SCHOLARSHIP LIST IN JSON FORMAT",
+          }];
+  
+          // Using just a single string for user messages
+          mResponse.scholarships.forEach((scholarship) => {
+              messages.push({
+                  role: "user",
+                  content: `{"type": "text", "text": "Analyze the suitability of your profile to this scholarship program PROFILE: ${JSON.stringify(mResponse.userProfile)} SCHOLARSHIP: ${JSON.stringify(scholarship)}"}`,
+              });
+          });
+  
+          // Call the OpenAI API with the prepared messages
+          const response = await openai.chat.completions.create({
+              model: "gpt-4o-mini",
+              messages: messages,
+              temperature: 1,
+              max_tokens: 2048,
+              top_p: 1,
+              frequency_penalty: 0,
+              presence_penalty: 0,
+          });
+         if (!response.choices || response.choices.length === 0) {
+               return res.status(400).json({ message: "Invalid response from OpenAI API" });
+         }
+         if (!response.choices[0].message) {
+            return res.status(400).json({ message: "Invalid response from OpenAI API" });
+         }
+         const rekomendasiAI = response.choices[0].message.content;
+         if (!rekomendasiAI) {
+            return res.status(400).json({ message: "Invalid response from OpenAI API" });
+         }
+         const cleanRekomendasiAI = rekomendasiAI.replace(/(\r\n|\n|\r)/gm, "");
+         try {
+            const dataRekomendasi = JSON.parse(cleanRekomendasiAI);
+            const hasilAI = [{
+               "rekomendasi": dataRekomendasi,
+               "listBeasiswa": mResponse.scholarships
+            }];
+            return res.status(200).json(hasilAI);
+            }catch (error) {
+            return res.status(400).json({ message: `Invalid response from OpenAI API: ${error}` });
+         }
       } catch (error) {
-         console.error(error);
-         return res.status(500).json({ error: "An error occurred while processing your request." });
-      }
-   },
+          console.error(error);
+          return res.status(500).json({ error: "An error occurred while processing your request." });
+      } 
+   }
+   
 };
 
 export default ScholarshipController;

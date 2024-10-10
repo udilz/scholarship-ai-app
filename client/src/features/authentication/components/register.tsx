@@ -91,16 +91,6 @@ export const Register = () => {
                 )}
               </div>
             </form>
-            <form action="http://localhost:8000/api/auth/continue-with-google" method="POST">
-              {isFirstStep && (
-                <Button variant="outline" className="flex w-full items-center justify-center">
-                  <div className="flex items-center gap-2">
-                    <img src="/images/google.png" alt="Google Icon" width={15} height={15} />
-                    Continue with Google
-                  </div>
-                </Button>
-              )}
-            </form>
             {isError && <div className="text-center text-sm font-medium text-rose-600">{error?.message}</div>}
             {isFirstStep && (
               <div className="text-sm">

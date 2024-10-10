@@ -4,7 +4,7 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "dev": "nodemon src/main.ts",
+      "dev": "bun run --watch src/main.ts",
       "lint": "eslint src/**/*.ts",
       "build": "tsc",
       "start": "node dist/main.js",
