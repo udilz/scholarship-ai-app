@@ -3,7 +3,7 @@ import ScholarshipServices from "../services/scholarship.services";
 import { IScholarshipData } from "../types/scholarships.type";
 import OpenAI from "openai";
 import config from "../config/config";
-import {ChatCompletionMessageParam} from '../types/openAi.type'
+import { ChatCompletionMessageParam } from "../types/openAi.type";
 const ScholarshipController = {
    handleGetAllScholarships: async (_: Request, res: Response) => {
       const allScholarships = await ScholarshipServices.getAll();
@@ -88,7 +88,7 @@ const ScholarshipController = {
       }
    },
 
-   handleGetById: async (req: Request, res: Response) => {
+   handleGetScholarshipById: async (req: Request, res: Response) => {
       const scholarshipId = req.params.id;
       try {
          // Call the service to get the scholarship by id
@@ -126,7 +126,7 @@ const ScholarshipController = {
    handleGetData: async (req: Request, res: Response) => {
       try {
          const { country, major, degrees, funding_type, email } = req.body;
-         console.log( country, major, degrees, funding_type, email )
+         console.log(country, major, degrees, funding_type, email);
          const allScholarships = await ScholarshipServices.getScholarshipByData(country, major, degrees, funding_type);
          // console.log(allScholarships)
          const userProfile = await ScholarshipServices.getUserProfile(email);
@@ -173,7 +173,7 @@ const ScholarshipController = {
          ];
          // console.log(hasilAI);
          // console.log(mResponse);
-         
+
          return res.status(200).json(hasilAI);
       } catch (error) {
          console.error(error);
