@@ -8,7 +8,7 @@ interface OnboardingArgs {
   }
   export async function updateUser(id: string,{educational_background, major, funding_need, preference }: OnboardingArgs) {
     const res = await fetch(`http://localhost:8000/api/v1/users/update/${id}`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },

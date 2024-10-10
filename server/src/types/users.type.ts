@@ -1,5 +1,4 @@
 export interface IUser {
-    id:string;
     name: string;
     email: string;
     password: string;
@@ -8,6 +7,6 @@ export interface IUser {
     major: string;
     funding_need: string;
     preference: string;
-    created_at: Date;
-    updated_at: Date;
+    created_at?: Date;
+    updated_at?: Date;
 }

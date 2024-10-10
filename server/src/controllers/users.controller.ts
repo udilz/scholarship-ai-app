@@ -91,14 +91,14 @@ const UserController = {
   },
 
     handleUpdateUser: async (req: Request, res: Response) => {
-       const header = req.headers.authorization;
+      //  const header = req.headers.authorization;
        const userID = req.params.id;
-       // updating a scholarship requires authorization
-       if (header !== "123123") {
-          return res.status(401).json({
-             message: "Unauthorized",
-          });
-       }
+      //  // updating a scholarship requires authorization
+      //  if (header !== "123123") {
+      //     return res.status(401).json({
+      //        message: "Unauthorized",
+      //     });
+      //  }
        try {
           // business logic to update a scholarship
           // Call the service to update the scholarship
