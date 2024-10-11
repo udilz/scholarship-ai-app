@@ -13,7 +13,7 @@ interface ICardProps {
 
 export const Card = ({title, description, link, openDate, closeDate, city, country} : ICardProps) => {
     return (
-      <section key={title} className="rounded-md border-2 px-3 py-2 space-y-3">
+      <section key={title} className="rounded-md border-2 border-primary-500 px-3 py-2  space-y-3">
         <header className="flex items-center justify-between">
           <h2 className="text-lg">{title}</h2>
           <Button className="rounded-full" iconOnly>
