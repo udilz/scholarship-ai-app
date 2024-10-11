@@ -32,7 +32,9 @@ export const Navbar = () => {
         });
 
         const data = await res.json();
-        Cookies.remove('token')
+        Cookies.remove('token');
+        Cookies.remove('user');
+        localStorage.clear();
         navigate('/login')
         return data;
       } catch (error) {
@@ -45,11 +47,22 @@ export const Navbar = () => {
   useEffect(() => {
     const token = Cookies.get('token');
     const accessToken = Cookies.get('accessToken');
+    
+    // google
+    const userCookie = Cookies.get('user');
+    const parsedUserCookie = userCookie ? JSON.parse(userCookie) : null;
+    console.log("parsedUserCookie",parsedUserCookie);
+    
+    // manual login
     const getUser = JSON.parse(localStorage.getItem('user') as string);
-
-    if (token || accessToken) {
+    console.log("getuer", getUser)
+    if (token) {
       setIsAuthenticated(true);
       setUser(getUser);
+    }else if (accessToken) {
+      setIsAuthenticated(true);
+      localStorage.setItem('user', JSON.stringify(parsedUserCookie));
+      setUser(parsedUserCookie);
     } else {
       setIsAuthenticated(false);
       navigate('/login');

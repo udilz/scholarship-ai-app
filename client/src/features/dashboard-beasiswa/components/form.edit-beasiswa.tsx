@@ -8,10 +8,11 @@ import { updateBeasiswa,getBeasiswaById } from '../services/dashboard.api';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const FormEditBeasiswa = () => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [error, setError] = useState<string>('');
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
@@ -68,6 +69,7 @@ export const FormEditBeasiswa = () => {
     setSuccess(true);
     setError('');
     setLoading(false);
+    navigate('/dashboard/scholarship')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

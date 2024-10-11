@@ -8,7 +8,6 @@ import { IDataScholarship } from '../types/filter';
   
 export const PropmtForm = () => {
 
-  // const getUser = JSON.parse(localStorage.getItem('user') as string);
   const {data, handleSearchScholarship, isPending, isError, formData, setFormData} = useSearch();
 
   return (

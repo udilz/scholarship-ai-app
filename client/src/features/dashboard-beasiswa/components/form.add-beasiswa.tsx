@@ -7,9 +7,11 @@ import { InputDate } from './inputDate';
 import { addBeasiswa } from '../services/dashboard.api';
 import { useState } from 'react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const FormAddBeasiswa = () => {
   const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -51,6 +53,7 @@ export const FormAddBeasiswa = () => {
     setSuccess(true);
     setError('');
     setLoading(false);
+    navigate('/dashboard/scholarship')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
