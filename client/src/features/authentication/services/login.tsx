@@ -17,21 +17,16 @@ export async function loginUser({ email, password }: LoginUserArgs) {
       },
       body: JSON.stringify({ email, password }),
     });
-    console.log(res);
-    if (res.status === 401) {
+
+    if (!res.ok) {
       throw new Error('Invalid email or password');
     }
 
     const data = await res.json();
-    console.log(data.token);
-    
     Cookies.set('token', data.token.accessToken)
-    const token = Cookies.get('token');
-    if (token) {
-      const decodedToken = jwtDecode<jwtPayload>(token);
-      localStorage.setItem('user', JSON.stringify(decodedToken));
-    }
-
+    const decodedToken = jwtDecode<jwtPayload>(data.token.accessToken);
+    localStorage.setItem('user', JSON.stringify(decodedToken));
+    
     return data;
   } catch (err) {
     console.log(err);

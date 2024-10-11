@@ -115,7 +115,8 @@ const UsersServices = {
             const Payload = {
                id: User._id,
                name: User.name,
-               email: User.email
+               email: User.email,
+               role: User.role
             }
                 // Authorization
             const accessToken = jwt.sign(Payload, config.JWT_ACCESS_SECRET, { expiresIn: "10m" });

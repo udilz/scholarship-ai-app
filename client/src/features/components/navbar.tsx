@@ -45,21 +45,16 @@ export const Navbar = () => {
   useEffect(() => {
     const token = Cookies.get('token');
     const accessToken = Cookies.get('accessToken');
-    const userCookie = Cookies.get('user');
-    const parsedUserCookie = userCookie ? JSON.parse(userCookie) : null;
     const getUser = JSON.parse(localStorage.getItem('user') as string);
 
-    if (token) {
+    if (token || accessToken) {
       setIsAuthenticated(true);
       setUser(getUser);
-    } else if (accessToken) {
-      setIsAuthenticated(true);
-      setUser(parsedUserCookie);
     } else {
       setIsAuthenticated(false);
-      window.location.href = '/login';
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   if (!isAuthenticated) return null;
 

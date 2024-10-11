@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import { loginUser } from '../services/login';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { jwtPayload } from '../types/entity';
 
 
 export const Login = () => {
@@ -21,7 +24,15 @@ export const Login = () => {
     mutationKey: ['login'],
     mutationFn: () => loginUser({ email, password }),
     onSuccess: () => {
-      navigate('/prompt');
+      const token = Cookies.get('token');
+      if (token) {
+        const decodedToken = jwtDecode<jwtPayload>(token);
+        if (decodedToken.role === 'admin') {
+          navigate('/dashboard');
+        } else if (decodedToken.role === 'user') {
+          navigate('/prompt');
+        }
+      }
     },
   });
 
