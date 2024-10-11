@@ -12,11 +12,9 @@ export const PropmtForm = () => {
   const {data, handleSearchScholarship, isPending, isError, formData, setFormData} = useSearch();
 
   return (
-    <div className="flex h-screen items-center justify-center  ">
-      <div className="flex h-3/4 w-3/4 rounded-md border border-primary-500 shadow-xl ">
-        <section className="flex w-5/12 flex-col justify-between border-r-2 border-primary-500 p-5">
+    <div className="flex ">
+        <section className="flex w-4/12 flex-col justify-between h-screen border-r-2 border-primary-500 p-5">
           <div className="space-y-4">
-            {/* If you want to keep it read-only, you can use a simple display */}
             <Input value={formData.email} readOnly name='email' className='hidden' /> 
             <Select caption="Negara" options={countries} name="country" onValueChange={(value) => setFormData((prev) => ({ ...prev, country: value }))} value={formData.country} required />
             <Select caption="Jenis Pendanaan" options={pendanaanBeasiswa} name="funding_type" onValueChange={(value) => setFormData((prev) => ({ ...prev, funding_type: value }))} value={formData.funding_type} required />
@@ -25,21 +23,22 @@ export const PropmtForm = () => {
             <Button disabled={isPending} className="flex w-full justify-center" onClick={() => handleSearchScholarship()}>
               Search
             </Button>
-          </div>
           {isError && <div className="text-red-500">An error occurred while fetching data.</div>}
+          </div>
         </section>
-        <section className="flex-1  overflow-hidden overflow-y-auto ">
+        <section className="h-screen flex-1 overflow-hidden overflow-y-auto ">
         {isPending ? <p className='p-5'>Searching...</p> : ''}
           {data && (
-            <section className='flex gap-3 border p-5 sticky top-0 bg-white border-b-primary-500'>
-            <div className='text-sm border p-2 rounded-full w-10 h-10 flex justify-center'>{data.rekomendasi.relevancy}%</div>
-            <div className='text-wrap'>
-              <p className='font-bold'>short description</p>
-              <p>{data.rekomendasi?.shortDescription}</p>
-              <p><strong>Props</strong>: {data.rekomendasi?.pros}</p>
-              <p><strong>Cons</strong>: {data.rekomendasi?.cons}</p>
+
+            <section className='flex items-center gap-4 border p-5 sticky top-0 bg-white border-b-primary-500 font-sans'>
+            <div className='text-base p-2 rounded-full w-12 h-12 flex items-center justify-center border-2 border-primary-500 text-blue-500 font-bold'>{data.rekomendasi.relevancy}%</div>
+            <div className='text-wrap space-y-2'>
+              <p><span className='font-semibold text-primary-500'>Props</span>: {data.rekomendasi?.shortDescription}</p>
+              <p><span className='font-semibold text-primary-500'>Props</span>: {data.rekomendasi?.pros}</p>
+              <p><span className='font-semibold text-primary-500'>Cons</span>: {data.rekomendasi?.cons}</p>
             </div>
           </section>
+
           )}        
           {data && (          
             <div className='space-y-5 p-5'>
@@ -51,7 +50,6 @@ export const PropmtForm = () => {
             </div>
           )}
         </section>
-      </div>
     </div>
   );
 };

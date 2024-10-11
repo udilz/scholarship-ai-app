@@ -12,7 +12,7 @@ const UserController = {
    handleLoginUser: async (req: Request, res: Response) => {
       const { email, password } = req.body;
       const loginUser = await UsersServices.loginUser(email, password);
-      console.log(loginUser);
+      // console.log(loginUser);
 
       if (!loginUser) {
          return res.json({ message: "Invalid email or password" });

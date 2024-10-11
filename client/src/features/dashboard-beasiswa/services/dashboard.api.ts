@@ -41,7 +41,10 @@ export async function getBeasiswa() {
 
 export async function getBeasiswaById(id:string) {
     try {
-        const res = await fetch(`http://localhost:8000/api/v1/scholarships/get/${id}`)
+        const res = await fetch(`http://localhost:8000/api/v1/scholarships/get/${id}`,{
+            method: 'GET',
+            credentials: 'include',
+        })
 
         if (!res.ok) {
             throw new Error(`Server Error: ${res.status}`);

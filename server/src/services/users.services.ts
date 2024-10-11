@@ -104,11 +104,11 @@ const UsersServices = {
             if (!User) {
                return null;
             }
-            console.log(password);
+            // console.log(password);
             // console.log(User);
             // console.log(User.password);
             const isMatch = await bcrypt.compare(password, User.password);
-            console.log("service", isMatch)
+            // console.log("service", isMatch)
             if (!isMatch) {
                console.log({ message: "Invalid email or password XXXX" });
             }

@@ -36,7 +36,7 @@ export const Navbar = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <header className="fixed flex w-full items-center justify-between px-4 py-2 bg-white">
+    <header className=" flex w-full items-center justify-between sticky top-0 px-4 py-2 bg-white border-b-2 border-primary-500">
       <div className="font-medium tracking-tight">Scholarship AI.</div>
       <div className="flex items-center gap-6 font-medium">
         <div className="space-x-4">
