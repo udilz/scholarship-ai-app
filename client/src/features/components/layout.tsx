@@ -6,7 +6,7 @@ export const Layout= () => {
 
   
   return (
-    <main className='h-screen'>
+    <main className=''>
       <Navbar />
       <Outlet/>
     </main>
