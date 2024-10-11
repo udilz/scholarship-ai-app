@@ -23,7 +23,7 @@ export const PropmtForm = () => {
             <Button disabled={isPending} className="flex w-full justify-center" onClick={() => handleSearchScholarship()}>
               Search
             </Button>
-          {isError && <div className="text-red-500">An error occurred while fetching data.</div>}
+          {isError && <div className="text-red-500">Data tidak ditemukan.</div>}
           </div>
         </section>
         <section className="h-screen flex-1 overflow-hidden overflow-y-auto ">
@@ -33,7 +33,7 @@ export const PropmtForm = () => {
             <section className='flex items-center gap-4 border p-5 sticky top-0 bg-white border-b-primary-500 font-sans'>
             <div className='text-base p-2 rounded-full w-12 h-12 flex items-center justify-center border-2 border-primary-500 text-blue-500 font-bold'>{data.rekomendasi.relevancy}%</div>
             <div className='text-wrap space-y-2'>
-              <p><span className='font-semibold text-primary-500'>Props</span>: {data.rekomendasi?.shortDescription}</p>
+              <p><span className='font-semibold text-primary-500'>Description</span>: {data.rekomendasi?.shortDescription}</p>
               <p><span className='font-semibold text-primary-500'>Props</span>: {data.rekomendasi?.pros}</p>
               <p><span className='font-semibold text-primary-500'>Cons</span>: {data.rekomendasi?.cons}</p>
             </div>

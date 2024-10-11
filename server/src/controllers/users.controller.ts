@@ -28,43 +28,21 @@ const UserController = {
    },
 
    handleLogoutUser: async (req: Request, res: Response) => {
-      const { RefreshToken } = req.cookies;
-      if (!RefreshToken) {
+      const { refreshToken } = req.cookies;
+      // console.log(refreshToken);
+      
+      if (!refreshToken) {
          return res.json({ message: "Invalid token" });
       }
-      const token = await UsersServices.logoutUser(RefreshToken);
+      const token = await UsersServices.logoutUser(refreshToken);
       // console.log(token);
       if (!token) {
          return res.json({ message: "Invalid token" });
       }
       // // console.log(RefreshToken);
       // return res.json({ message: token });
-      return res.clearCookie("AccessToken").clearCookie("RefreshToken").status(200).json({ message: "Logout success" });
+      return res.clearCookie("accessToken").clearCookie("refreshToken").status(200).json({ message: "Logout success" });
    },
-
-   // handleCreateUser: async (req: Request, res: Response) => {
-   // const requiredFields = [
-   // "name",
-   // "email",
-   // "password"
-   // ];
-   // for (const field of requiredFields) {
-   // // For each required field, check if it exists in the request body
-   // if (!req.body[field]) {
-   // // If it doesn't exist, return an error
-   // return res.status(400).json({ error: `The ${field} field is required.` });
-   // }
-   // }
-   // try {
-   // const newUser: IUser = req.body;
-   // const createUser = await UsersServices.createUser(newUser);
-   // return res
-   // .status(201)
-   // .json({ message: "New user created successfully", data: { _id: createUser._id } });
-   // } catch {
-   // return res.status(500).json({ error: "Failed to create the scholarship." });
-   // }
-   // },
 
    handleRegisterUser: async (req: Request, res: Response) => {
       const requiredFields = ["name", "email", "password"];
@@ -132,8 +110,5 @@ const UserController = {
       }
    },
 };
-
-
-
 
 export default UserController;
