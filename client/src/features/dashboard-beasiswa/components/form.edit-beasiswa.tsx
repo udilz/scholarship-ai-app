@@ -78,7 +78,7 @@ export const FormEditBeasiswa = () => {
   };
 
   return (
-    <main>
+    <main className='font-poppins'>
       <section className="space-y-4">
         <h3>Edit Beasiswa</h3>
         <section>

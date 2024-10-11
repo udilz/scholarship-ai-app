@@ -73,12 +73,12 @@ export const ScholarshipTable = ({ scholarships, onDelete }: ScholarshipTablePro
               <td className="px-6 py-4">{new Date(scholarship.close_date).toLocaleDateString('id-ID')}</td>
               <td className="block w-96 px-6 py-4">{scholarship.description}</td>
               <td className="space-x-4 px-6 py-4">
-                <a href="#" className="text-red-500" onClick={() => onDelete(scholarship._id)}>
-                  delete
-                </a>
-                <Link to={`/dashboard/scholarship/edit/${scholarship._id}`} className="text-blue-600">
-                  update
+                <Link  to={`/dashboard/scholarship/edit/${scholarship._id}`} className="text-white p-2 rounded-md bg-primary-400">
+                  Update
                 </Link>
+                <a href="#" className="text-white p-2 rounded-md bg-red-500" onClick={() => onDelete(scholarship._id)}>
+                  Delete
+                </a>
               </td>
             </tr>
           ))}
