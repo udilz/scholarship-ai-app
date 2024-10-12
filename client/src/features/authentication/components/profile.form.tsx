@@ -18,9 +18,9 @@ export const ProfileForm = ({ nama, email, password, updateFields }: profileForm
           <p className='text-sm'>Create an account to continue</p>
         </section>
         <div className="space-y-2">
-          <Input type="text" required placeholder="Name" name="nama" value={nama} onChange={(e) => updateFields({ nama: e.target.value })} />
-          <Input type="email" required placeholder="Email" name="email" value={email} onChange={(e) => updateFields({ email: e.target.value })} />
-          <Input type="password" required placeholder="Password" name="password" value={password} onChange={(e) => updateFields({ password: e.target.value })} />
+          <Input type="text"  placeholder="Name" name="nama" value={nama} onChange={(e) => updateFields({ nama: e.target.value })} />
+          <Input type="email"  placeholder="Email" name="email" value={email} onChange={(e) => updateFields({ email: e.target.value })} />
+          <Input type="password"  placeholder="Password" name="password" value={password} onChange={(e) => updateFields({ password: e.target.value })} />
         </div>
       </div>
     </>

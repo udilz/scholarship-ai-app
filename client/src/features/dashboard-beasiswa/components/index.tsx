@@ -17,7 +17,7 @@ export const DashboardBeasiswa = () => {
   }
 
   return (
-    <main className="w-full">
+    <main className="w-full font-poppins">
       <section className="sticky top-0 z-[2] flex items-center justify-between bg-white py-4">
         <div>
           <h3 className="text-xl">Data beasiswa</h3>

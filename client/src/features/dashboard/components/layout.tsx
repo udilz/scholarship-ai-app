@@ -71,7 +71,7 @@ export const LayoutDashboard = (props: LayoutProps) => {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen font-poppins">
       <aside className="flex w-[240px] flex-col justify-between bg-gradient-to-b from-primary-50/50 to-violet-50/50 p-6">
         <section>
           <div className="mb-4 px-3 py-2 text-base font-bold">Scholarship</div>
@@ -79,7 +79,7 @@ export const LayoutDashboard = (props: LayoutProps) => {
           <Menu label="Beasiswa" href="/dashboard/scholarship" icon={<Box size={18} />} />
         </section>
         <div>
-          <Button onClick={() => handleLogout()} variant="outline">
+          <Button className='flex w-full justify-center' onClick={() => handleLogout()} variant='primary'>
             Logout
           </Button>
         </div>

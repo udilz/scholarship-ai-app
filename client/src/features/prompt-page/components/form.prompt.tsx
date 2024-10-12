@@ -11,14 +11,14 @@ export const PropmtForm = () => {
   const {data, handleSearchScholarship, isPending, isError, formData, setFormData} = useSearch();
 
   return (
-    <div className="flex ">
-        <section className="flex w-4/12 flex-col justify-between border-r-2 border-primary-500 p-5">
+    <div className="flex font-poppins">
+        <section className="flex w-4/12 flex-col justify-between h-screen border-r-2 border-primary-500 p-5">
           <div className="space-y-4">
             <Input value={formData.email} readOnly name='email' className='hidden' /> 
             <Select caption="Negara" options={countries} name="country" onValueChange={(value) => setFormData((prev) => ({ ...prev, country: value }))} value={formData.country} required />
             <Select caption="Jenis Pendanaan" options={pendanaanBeasiswa} name="funding_type" onValueChange={(value) => setFormData((prev) => ({ ...prev, funding_type: value }))} value={formData.funding_type} required />
-            <Select caption="Jenjang Beasiswa" options={jenjangBeasiswa} className="w-3/5" name="degrees" onValueChange={(value) => setFormData((prev) => ({ ...prev, degrees: value }))} value={formData.degrees} required />
-            <Select caption="Jurusan" options={majorIndonesia} className="w-3/5" name="major" onValueChange={(value) => setFormData((prev) => ({ ...prev, major: value }))} value={formData.major} required />
+            <Select caption="Jenjang Beasiswa" options={jenjangBeasiswa} name="degrees" onValueChange={(value) => setFormData((prev) => ({ ...prev, degrees: value }))} value={formData.degrees} required />
+            <Select caption="Jurusan" options={majorIndonesia} name="major" onValueChange={(value) => setFormData((prev) => ({ ...prev, major: value }))} value={formData.major} required />
             <Button disabled={isPending} className="flex w-full justify-center" onClick={() => handleSearchScholarship()}>
               Search
             </Button>

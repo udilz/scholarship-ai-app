@@ -8,19 +8,25 @@ import { loginUser } from '../services/login';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { jwtPayload } from '../types/entity';
+import { loginSchema, TLogin } from '../validation/auth.validation';
+import { fromError, ZodIssue } from 'zod-validation-error';
 
+function loginSchemaValidation({ email, password }: TLogin) {
+  try {
+    loginSchema.parse({ email, password });
+  } catch (error) {
+    const validationErr = fromError(error);
+    return validationErr.details;
+  }
+}
 
 export const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<ZodIssue[]>([]);
 
-  const {
-    mutate: handleSubmitLogin,
-    isPending,
-    error,
-    isError,
-  } = useMutation({
+  const { mutate: handleSubmitLogin, isPending } = useMutation({
     mutationKey: ['login'],
     mutationFn: () => loginUser({ email, password }),
     onSuccess: () => {
@@ -35,6 +41,22 @@ export const Login = () => {
       }
     },
   });
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const validationErrors = loginSchemaValidation({ email, password });
+    if (validationErrors) {
+      setErrors(validationErrors);
+      return; 
+    }
+    setErrors([]);
+    handleSubmitLogin();
+  }
 
   return (
     <main className="h-full w-full font-poppins">
@@ -56,11 +78,13 @@ export const Login = () => {
               <p className="text-sm">Welcome back, please log in to continue</p>
             </section>
             <div className="space-y-2">
-              <Input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-              <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-              <Button disabled={isPending} onClick={() => handleSubmitLogin()} className="flex w-full justify-center">
-                Log In
-              </Button>
+              <form onSubmit={onSubmit} className="space-y-2">
+                <Input name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                <Input name="password" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <Button type='submit' disabled={isPending} className="flex w-full justify-center">
+                  Log In
+                </Button>
+              </form>
               <form action="http://localhost:8000/api/v1/users/continue-with-google" method="POST">
                 <Button variant="outline" className="flex w-full justify-center">
                   <div className="flex items-center gap-2">
@@ -69,13 +93,19 @@ export const Login = () => {
                   </div>
                 </Button>
               </form>
-              {isError && <div className="text-center text-sm font-medium text-rose-600">{error?.message}</div>}
             </div>
-            <div className="text-sm">
+            <div className="space-y-2 text-sm">
               Don't have an account?{' '}
               <Link className="font-semibold text-blue-600" to="/register">
                 Register
               </Link>
+              {errors.map((error) => {
+                return (
+                  <div className="text-center text-xs text-rose-600" key={error.code}>
+                    {error.message}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

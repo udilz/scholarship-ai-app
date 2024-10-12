@@ -62,7 +62,7 @@ export const FormAddBeasiswa = () => {
   };
 
   return (
-      <main>
+      <main className='font-poppins'>
         <section className="space-y-4">
           <h3>Tambah Beasiswa</h3>
           <section>
@@ -108,12 +108,12 @@ export const FormAddBeasiswa = () => {
               />
               <InputDate label="Open Date" value={formData.open_date} onChange={handleChange} name="open_date" />
               <InputDate label="Close Date" value={formData.close_date} onChange={handleChange} name="close_date" />
-              <Textarea placeholder="Diskripsi beasiswa" required value={formData.description} onChange={handleChange} name="description" className="placeholder:text-black" rows={6} />
+              <Textarea placeholder="Deskripsi beasiswa" required value={formData.description} onChange={handleChange} name="description" className="placeholder:text-black" rows={6} />
               <Button disabled={isLoading} isFullwidth>
                 Add
               </Button>
               {error && <div className='text-center text-base text-red-500'>{error}</div>}
-              {isSuccess && <div className="text-center text-base text-emerald-500">data berhasil ditambah kan.</div>}
+              {isSuccess && <div className="text-center text-base text-emerald-500">Data berhasil ditambah kan.</div>}
             </form>
           </section>
         </section>
