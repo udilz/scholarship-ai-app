@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
@@ -74,12 +74,6 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 flex w-full items-center justify-between border bg-white px-4 py-2">
       <div className="font-medium tracking-tight">Scholarship AI.</div>
-      <div className="flex items-center gap-6 font-medium">
-        <div className="space-x-4">
-          <AtciveNavLink link="prompt" label="Home" />
-          <AtciveNavLink link="bookmark" label="Bookmark" />
-        </div>
-      </div>
       <div className="flex gap-2">
         <section className="flex items-center gap-2">
           <span>{user && user.name}</span>
@@ -95,15 +89,3 @@ export const Navbar = () => {
   );
 };
 
-interface IActiveNavLinkProps {
-  link: string;
-  label: string;
-}
-
-const AtciveNavLink = ({ link, label }: IActiveNavLinkProps) => {
-  return (
-    <NavLink to={`/${link}`} className={({ isActive }) => (isActive ? 'font-semibold text-primary-500' : 'text-primary-900 hover:text-primary-500')}>
-      {label}
-    </NavLink>
-  );
-};

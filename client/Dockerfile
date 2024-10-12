@@ -11,4 +11,4 @@ RUN pnpm build
 
 CMD [ "pnpm", "preview" ]
 
-EXPOSE 5173
+EXPOSE 4173

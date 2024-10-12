@@ -92,7 +92,7 @@ userRouter.get("/login/google/callback", async (req, res) => {
          .cookie("accessToken", accessToken)
          .cookie("user", JSON.stringify(payload))
          .status(200)
-         .redirect(newUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/onboarding");
+         .redirect(newUser.role === "admin" ? `${config.FRONTEND_URI}/dashboard` : `${config.FRONTEND_URI}/onboarding`);
    }
 
    // generate Session ID
@@ -118,14 +118,14 @@ userRouter.get("/login/google/callback", async (req, res) => {
          .cookie("accessToken", accessToken)
          .cookie("user", JSON.stringify(payload))
          .status(200)
-         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/"); // Redirect to prompt page
+         .redirect(findUser.role === "admin" ? `${config.FRONTEND_URI}/dashboard` : `${config.FRONTEND_URI}/onboarding`);
    } else {
       return res
          .cookie("refreshToken", refreshToken, { httpOnly: true })
          .cookie("accessToken", accessToken)
          .cookie("user", JSON.stringify(payload))
          .status(200)
-         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/onboarding");
+         .redirect(findUser.role === "admin" ? `${config.FRONTEND_URI}/dashboard` : `${config.FRONTEND_URI}/onboarding`);
    }
 });
 

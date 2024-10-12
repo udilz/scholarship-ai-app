@@ -11,6 +11,7 @@ interface ENV {
     JWT_ACCESS_SECRET: string | undefined;
     JWT_REFRESH_SECRET: string | undefined;
     OPENAI_API_KEY: string | undefined;
+    FRONTEND_URI: string | undefined;
   }
   
   interface Config {
@@ -20,6 +21,7 @@ interface ENV {
     JWT_ACCESS_SECRET: string;
     JWT_REFRESH_SECRET: string;
     OPENAI_API_KEY: string;
+    FRONTEND_URI: string;
   }
   
   const getConfig = (): ENV => {
@@ -29,7 +31,8 @@ interface ENV {
       MONGO_URI: process.env.MONGO_URI,
       JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,
       JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+      FRONTEND_URI: process.env.FRONTEND_URI
     };
   };
 

@@ -8,15 +8,13 @@ import { userRouter } from "./routes/users.route";
 import config from "./config/config";
 // dotenv.config();
 
-
-
 const app = express();
 
 // config
 dbConnect();
 app.use(
    cors({
-      origin: "http://localhost:5173",
+      origin: "http://localhost:4173",
       credentials: true,
    }),
 );

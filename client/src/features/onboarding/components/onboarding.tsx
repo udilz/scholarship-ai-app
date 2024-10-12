@@ -50,7 +50,7 @@ export const Onboarding = () => {
   } = useMutation({
     mutationKey: ['update'],
     mutationFn: () => updateUser(userId,{educational_background: data.jenjang, major: data.jurusan, funding_need: data.tipePendanaan, preference: data.preference }),
-    onSuccess: () => navigate('/prompt'),
+    onSuccess: () => navigate('/'),
   }, );
 
   return (
