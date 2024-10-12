@@ -6,7 +6,7 @@ export const Layout= () => {
 
   
   return (
-    <main className=''>
+    <main className='h-screen overflow-hidden'>
       <Navbar />
       <Outlet/>
     </main>

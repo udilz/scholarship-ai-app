@@ -2,6 +2,7 @@ export interface IDataScholarship {
     _id: string;
     name: string;
     description: string;
+    university:string;
     country: string;
     city: string;
     email: string;

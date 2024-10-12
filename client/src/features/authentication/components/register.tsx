@@ -57,7 +57,7 @@ export const Register = () => {
   } = useMutation({
     mutationKey: ['register'],
     mutationFn: () => registerUser({ name: data.nama, email: data.email, password: data.password, educational_background: data.jenjang, major: data.jurusan, funding_need: data.tipePendanaan, preference: data.preference }),
-    onSuccess: () => navigate('/prompt'),
+    onSuccess: () => navigate('/'),
   });
 
   return (

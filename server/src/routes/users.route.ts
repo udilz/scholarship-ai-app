@@ -118,7 +118,7 @@ userRouter.get("/login/google/callback", async (req, res) => {
          .cookie("accessToken", accessToken)
          .cookie("user", JSON.stringify(payload))
          .status(200)
-         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/prompt"); // Redirect to prompt page
+         .redirect(findUser.role === "admin" ? "http://localhost:5173/dashboard" : "http://localhost:5173/"); // Redirect to prompt page
    } else {
       return res
          .cookie("refreshToken", refreshToken, { httpOnly: true })

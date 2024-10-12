@@ -29,7 +29,7 @@ export const AppRouter = () => {
           <Route path="/dashboard/scholarship/edit/:id" element={<FormEditBeasiswa />}></Route>
         </Route>
         <Route element={<Layout/>}>
-          <Route path="/prompt" element={<Propmtpage/>}></Route>
+          <Route path="/" element={<Propmtpage/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

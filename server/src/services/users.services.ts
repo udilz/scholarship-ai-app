@@ -104,18 +104,19 @@ const UsersServices = {
             if (!User) {
                return null;
             }
-            console.log(password);
+            // console.log(password);
             // console.log(User);
             // console.log(User.password);
             const isMatch = await bcrypt.compare(password, User.password);
-            console.log("service", isMatch)
+            // console.log("service", isMatch)
             if (!isMatch) {
                console.log({ message: "Invalid email or password XXXX" });
             }
             const Payload = {
                id: User._id,
                name: User.name,
-               email: User.email
+               email: User.email,
+               role: User.role
             }
                 // Authorization
             const accessToken = jwt.sign(Payload, config.JWT_ACCESS_SECRET, { expiresIn: "10m" });

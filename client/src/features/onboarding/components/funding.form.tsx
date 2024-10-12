@@ -1,7 +1,7 @@
-import { Input } from '@/components/ui/input';
 import { FormWrapper } from './form.wrapper';
 import { Select } from '@/components/ui/select';
 import { pendanaanBeasiswa } from '@/data/scholarshipData';
+import { Textarea } from '@/components/ui/textarea';
 
 type ScholarshipData = {
   tipePendanaan: string;
@@ -25,7 +25,7 @@ export const FundingForm = ({ tipePendanaan, preference, updateFields }: Scholar
           updateFields({ tipePendanaan: value });
         }}
       ></Select>
-      <Input placeholder="Preference" name="preference" value={preference} onChange={(e) => updateFields({ preference: e.target.value })} />
+      <Textarea rows={4} placeholder="Preferensi beasiswa yang dicari" name="preference" value={preference} onChange={(e) => updateFields({ preference: e.target.value })} />
     </FormWrapper>
   );
 };
