@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ScholarshipTable } from './scholarship.table';
 import { useDashboard } from '../hooks/useDashboard';
 import { useMutateScholarship } from '../hooks/useMutateScholarship';
+import { Helmet } from 'react-helmet';
 
 export const DashboardBeasiswa = () => {
   const { data, isLoading, isError } = useDashboard();
@@ -18,6 +19,9 @@ export const DashboardBeasiswa = () => {
 
   return (
     <main className="w-full font-poppins">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <section className="sticky top-0 z-[2] flex items-center justify-between bg-white py-4">
         <div>
           <h3 className="text-xl">Data beasiswa</h3>
