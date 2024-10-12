@@ -8,15 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
-
 interface LayoutProps {
   isCentered?: boolean;
 }
 
+
 export const LayoutDashboard = (props: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState<LoggedInUser | null>(null);
 
   const { mutate: handleLogout } = useMutation({
     mutationKey: ['logout'],
@@ -30,7 +29,6 @@ export const LayoutDashboard = (props: LayoutProps) => {
           },
           body: JSON.stringify({}),
         });
-
         const data = await res.json();
         Cookies.remove('user');
         Cookies.remove('token');
@@ -46,22 +44,18 @@ export const LayoutDashboard = (props: LayoutProps) => {
   useEffect(() => {
     const token = Cookies.get('token');
     const accessToken = Cookies.get('accessToken');
-    
     // google
     const userCookie = Cookies.get('user');
     const parsedUserCookie = userCookie ? JSON.parse(userCookie) : null;
-    console.log("parsedUserCookie",parsedUserCookie);
-    
+    console.log('parsedUserCookie', parsedUserCookie);
+
     // manual login
     const getUser = JSON.parse(localStorage.getItem('user') as string);
-    console.log("getuer", getUser)
+    console.log('getuer', getUser);
     if (token) {
       setIsAuthenticated(true);
-      setUser(getUser);
-    }else if (accessToken) {
+    } else if (accessToken) {
       setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(parsedUserCookie));
-      setUser(parsedUserCookie);
     } else {
       setIsAuthenticated(false);
       navigate('/login');
@@ -74,12 +68,12 @@ export const LayoutDashboard = (props: LayoutProps) => {
     <div className="flex h-screen font-poppins">
       <aside className="flex w-[240px] flex-col justify-between bg-gradient-to-b from-primary-50/50 to-violet-50/50 p-6">
         <section>
-          <div className="mb-4 px-3 py-2 text-base font-bold">Scholarship</div>
+          <div className="mb-4 px-3 py-2 text-base font-bold">Scholarship.AI</div>
           <Menu label="Dashboard" href="/dashboard" icon={<Home size={18} />} />
           <Menu label="Beasiswa" href="/dashboard/scholarship" icon={<Box size={18} />} />
         </section>
         <div>
-          <Button className='flex w-full justify-center' onClick={() => handleLogout()} variant='primary'>
+          <Button className="flex w-full justify-center" onClick={() => handleLogout()} variant="primary">
             Logout
           </Button>
         </div>
