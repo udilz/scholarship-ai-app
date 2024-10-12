@@ -192,7 +192,7 @@ const ScholarshipController = {
       // This is a string because that's what Express.js uses
       // for its request parameters.
       const { accessToken, refreshToken } = req.cookies;
-      console.log(accessToken)
+      // console.log(accessToken)
 
       // Check if accessToken is present
       if (!accessToken) {

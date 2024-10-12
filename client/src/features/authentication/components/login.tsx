@@ -30,7 +30,7 @@ export const Login = () => {
         if (decodedToken.role === 'admin') {
           navigate('/dashboard');
         } else if (decodedToken.role === 'user') {
-          navigate('/prompt');
+          navigate('/');
         }
       }
     },

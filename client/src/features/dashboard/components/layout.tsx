@@ -6,13 +6,18 @@ import { Outlet } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+
 
 interface LayoutProps {
   isCentered?: boolean;
 }
 
 export const LayoutDashboard = (props: LayoutProps) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = useState<LoggedInUser | null>(null);
+
   const { mutate: handleLogout } = useMutation({
     mutationKey: ['logout'],
     mutationFn: async () => {
@@ -28,6 +33,7 @@ export const LayoutDashboard = (props: LayoutProps) => {
 
         const data = await res.json();
         Cookies.remove('user');
+        Cookies.remove('token');
         navigate('/login');
         return data;
       } catch (error) {
@@ -36,6 +42,33 @@ export const LayoutDashboard = (props: LayoutProps) => {
       }
     },
   });
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    const accessToken = Cookies.get('accessToken');
+    
+    // google
+    const userCookie = Cookies.get('user');
+    const parsedUserCookie = userCookie ? JSON.parse(userCookie) : null;
+    console.log("parsedUserCookie",parsedUserCookie);
+    
+    // manual login
+    const getUser = JSON.parse(localStorage.getItem('user') as string);
+    console.log("getuer", getUser)
+    if (token) {
+      setIsAuthenticated(true);
+      setUser(getUser);
+    }else if (accessToken) {
+      setIsAuthenticated(true);
+      localStorage.setItem('user', JSON.stringify(parsedUserCookie));
+      setUser(parsedUserCookie);
+    } else {
+      setIsAuthenticated(false);
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  if (!isAuthenticated) return null;
 
   return (
     <div className="flex h-screen">
