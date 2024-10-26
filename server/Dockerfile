@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm install -g pnpm@latest 
 RUN npm install -g bun
-RUN pnpm install
+RUN bun install
 
 EXPOSE 8000
 

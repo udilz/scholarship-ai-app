@@ -7,6 +7,7 @@ export function useDashboard () {
         queryKey: ['data'],
         queryFn: async () => {
           const data = await getBeasiswa()
+          console.log(data)
           return data
         }
       })
